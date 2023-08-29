@@ -11,7 +11,6 @@ class LoginService {
     }
 
     const token = createToken.generateToken({ email });
-    console.log(token);
 
     return { token };
   }
