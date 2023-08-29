@@ -1,0 +1,3 @@
+const mockToken: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5MzMzMTg2OX0.URUBT44FANWqg7jOLh0-jfs0T5SJMI8snhYaDSSopLo';
+
+export default mockToken;
