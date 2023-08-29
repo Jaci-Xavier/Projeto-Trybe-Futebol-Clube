@@ -15,6 +15,14 @@ class LoginService {
 
     return { token };
   }
+
+  static async role(email: string) {
+    const user = await User.findOne({ where: { email } });
+
+    const role = user?.dataValues.role;
+
+    return { role };
+  }
 }
 
 export default LoginService;
