@@ -46,6 +46,15 @@ class MatchesService {
 
     return { message: 'Finished' };
   }
+
+  static async updateMatch(id: string, homeTeamGoals: number, awayTeamGoals: number) {
+    await Match.update({
+      homeTeamGoals,
+      awayTeamGoals,
+    }, { where: { id } });
+
+    return { homeTeamGoals, awayTeamGoals };
+  }
 }
 
 export default MatchesService;

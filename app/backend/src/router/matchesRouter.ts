@@ -19,4 +19,12 @@ matchesRouter.patch(
   matchesController.finishMatch,
 );
 
+matchesRouter.patch(
+  '/matches/:id',
+
+  tokenVerify,
+
+  matchesController.updateMatch,
+);
+
 export default matchesRouter;
