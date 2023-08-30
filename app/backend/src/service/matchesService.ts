@@ -43,9 +43,6 @@ class MatchesService {
         matches.filter((match) => match.inProgress === false);
         break;
     }
-
-    // if (inProgress === 'true') return matches.filter((match) => match.inProgress === true);
-    // if (inProgress === 'false') return matches.filter((match) => match.inProgress === false);
   }
 
   static async finishMatch(id: string) {
