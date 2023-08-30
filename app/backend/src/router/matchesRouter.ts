@@ -11,6 +11,14 @@ matchesRouter.get(
   matchesController.getAllMaches,
 );
 
+matchesRouter.post(
+  '/matches',
+
+  tokenVerify,
+
+  matchesController.createMatch,
+);
+
 matchesRouter.patch(
   '/matches/:id/finish',
 

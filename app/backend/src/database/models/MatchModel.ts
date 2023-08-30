@@ -3,7 +3,7 @@ import db from '.';
 import Team from './TeamModel';
 
 class Match extends Model<InferAttributes<Match>, InferCreationAttributes<Match>> {
-  declare id: number;
+  declare id?: number;
   declare homeTeamId: number;
   declare awayTeamId: number;
   declare homeTeamGoals: number;

@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-
 import matchesService from '../service/matchesService';
 
 class MatchesController {
@@ -28,6 +27,14 @@ class MatchesController {
     const match = await matchesService.updateMatch(id, homeTeamGoals, awayTeamGoals);
 
     return res.status(200).json(match);
+  }
+
+  static async createMatch(req: Request, res: Response): Promise<Response> {
+    const data = req.body;
+
+    const match = await matchesService.createMatch(data);
+
+    return res.status(match.status).json(match.data);
   }
 }
 
