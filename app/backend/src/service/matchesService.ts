@@ -40,6 +40,12 @@ class MatchesService {
     if (inProgress === 'true') return matches.filter((match) => match.inProgress === true);
     if (inProgress === 'false') return matches.filter((match) => match.inProgress === false);
   }
+
+  static async finishMatch(id: string) {
+    await Match.update({ inProgress: false }, { where: { id } });
+
+    return { message: 'Finished' };
+  }
 }
 
 export default MatchesService;
