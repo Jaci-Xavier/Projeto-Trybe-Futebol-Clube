@@ -40,8 +40,7 @@ class MatchesService {
       case 'true':
         return matches.filter((match) => match.inProgress === true);
       default:
-        matches.filter((match) => match.inProgress === false);
-        break;
+        return matches.filter((match) => match.inProgress === false);
     }
   }
 
