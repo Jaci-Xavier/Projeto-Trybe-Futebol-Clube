@@ -1,5 +1,7 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
+import * as jwt from 'jsonwebtoken';
+
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
@@ -32,6 +34,36 @@ describe('Testando a rota matches', () => {
   it('testando se é possivel listar as partidas finalizadas', async () => {
     sinon.stub(Match, 'findAll').resolves([]);
     const response = await chai.request(app).get('/matches?inProgress=false');
+    expect(response.status).to.be.equal(200);
+  });
+
+  it('testando se é possivel criar uma partida', async () => {
+    sinon.stub(jwt, 'verify').returns({ email: 'admin@admin.com'} as any);
+    sinon.stub(Match, 'create').resolves({} as any);
+
+    const response = await chai.request(app).post('/matches').set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5MzMzMTg2OX0.URUBT44FANWqg7jOLh0-jfs0T5SJMI8snhYaDSSopLo')
+    .send({
+      homeTeamId: 1,
+      awayTeamId: 3,
+      homeTeamGoals: 0,
+      awayTeamGoals: 0,
+      inProgress: true,
+    });
+    expect(response.status).to.be.equal(201);
+  });
+
+  it('testando se é possivel atualizar uma partida', async () => {
+    sinon.stub(jwt, 'verify').returns({ email: 'admin@admin.com'} as any);
+    sinon.stub(Match, 'update').resolves({} as any);
+
+    const response = await chai.request(app).patch('/matches/1').set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5MzMzMTg2OX0.URUBT44FANWqg7jOLh0-jfs0T5SJMI8snhYaDSSopLo')
+    .send({
+      homeTeamId: 1,
+      awayTeamId: 3,
+      homeTeamGoals: 0,
+      awayTeamGoals: 0,
+      inProgress: true,
+    });
     expect(response.status).to.be.equal(200);
   });
 

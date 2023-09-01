@@ -24,5 +24,5 @@ describe('Testando a rota leaderboard', () => {
     expect(response.status).to.be.equal(200);
   });
 
-  
+
 });

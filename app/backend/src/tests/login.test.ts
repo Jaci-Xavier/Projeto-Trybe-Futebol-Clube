@@ -9,8 +9,11 @@ import mockToken from './mocks/mockToken';
 import mockUser from './mocks/mockUser';
 import createToken from '../utils/createToken';
 import User from '../Interfaces/Users/User';
+import tokenVerify from '../middlewares/tokenVerify';
+import autJwt from '../utils/auth.jwt';
 
 import { Response } from 'superagent';
+import { verify } from 'crypto';
 
 chai.use(chaiHttp);
 
@@ -55,26 +58,5 @@ describe('Testando a rota login', () => {
 
     expect(response.status).to.be.equal(401);
   });
-
-//   it('testando a rota de role', async () => {
-//     const adminUser: User = {
-//       id: 1,
-//       username: 'admin',
-//       role: 'admin',
-//       email: 'admin@admin.com',
-//       password: 'secret_admin',
-//     };
-    
-//     sinon.stub(UserModel, 'findOne').resolves(adminUser as any);
-//     sinon.stub(createToken, 'generateToken').returns(mockToken);
-
-//     const response = await chai.request(app).post('/role').send({
-//       user: {
-//         email: 'admin@amin.com',
-//       },
-//     });
-
-//     expect(response.status).to.be.equal(200);
-// });
 
 });
