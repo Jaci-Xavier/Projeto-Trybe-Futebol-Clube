@@ -31,11 +31,11 @@ export default class LeaderboardUtils {
 
     match.forEach((game) => {
       updatedLeaderboard[game.homeTeamId - 1].totalGames += 1;
-      updatedLeaderboard[game.awayTeamId - 1].totalGames += 1;
+      // updatedLeaderboard[game.awayTeamId - 1].totalGames += 1;
       updatedLeaderboard[game.homeTeamId - 1].goalsFavor += game.homeTeamGoals;
-      updatedLeaderboard[game.awayTeamId - 1].goalsFavor += game.awayTeamGoals;
+      // updatedLeaderboard[game.awayTeamId - 1].goalsFavor += game.awayTeamGoals;
       updatedLeaderboard[game.homeTeamId - 1].goalsOwn += game.awayTeamGoals;
-      updatedLeaderboard[game.awayTeamId - 1].goalsOwn += game.homeTeamGoals;
+      // updatedLeaderboard[game.awayTeamId - 1].goalsOwn += game.homeTeamGoals;
     });
 
     return updatedLeaderboard;
@@ -51,11 +51,11 @@ export default class LeaderboardUtils {
       if (game.homeTeamGoals > game.awayTeamGoals) {
         updatedLeaderboard[game.homeTeamId - 1].totalPoints += 3;
         updatedLeaderboard[game.homeTeamId - 1].totalVictories += 1;
-        updatedLeaderboard[game.awayTeamId - 1].totalLosses += 1;
+        // updatedLeaderboard[game.awayTeamId - 1].totalLosses += 1;
       }
       if (game.homeTeamGoals < game.awayTeamGoals) {
-        updatedLeaderboard[game.awayTeamId - 1].totalPoints += 3;
-        updatedLeaderboard[game.awayTeamId - 1].totalVictories += 1;
+        // updatedLeaderboard[game.awayTeamId - 1].totalPoints += 3;
+        // updatedLeaderboard[game.awayTeamId - 1].totalVictories += 1;
         updatedLeaderboard[game.homeTeamId - 1].totalLosses += 1;
       }
     });
@@ -72,9 +72,9 @@ export default class LeaderboardUtils {
     match.forEach((game) => {
       if (game.homeTeamGoals === game.awayTeamGoals) {
         updatedLeaderboard[game.homeTeamId - 1].totalPoints += 1;
-        updatedLeaderboard[game.awayTeamId - 1].totalPoints += 1;
+        // updatedLeaderboard[game.awayTeamId - 1].totalPoints += 1;
         updatedLeaderboard[game.homeTeamId - 1].totalDraws += 1;
-        updatedLeaderboard[game.awayTeamId - 1].totalDraws += 1;
+        // updatedLeaderboard[game.awayTeamId - 1].totalDraws += 1;
       }
     });
 
@@ -115,9 +115,9 @@ export default class LeaderboardUtils {
       updatedLeaderboard[game.homeTeamId - 1]
         .goalsBalance = updatedLeaderboard[game.homeTeamId - 1].goalsFavor
         - updatedLeaderboard[game.homeTeamId - 1].goalsOwn;
-      updatedLeaderboard[game.awayTeamId - 1]
-        .goalsBalance = updatedLeaderboard[game.awayTeamId - 1].goalsFavor
-        - updatedLeaderboard[game.awayTeamId - 1].goalsOwn;
+      // updatedLeaderboard[game.awayTeamId - 1]
+      //   .goalsBalance = updatedLeaderboard[game.awayTeamId - 1].goalsFavor
+      //   - updatedLeaderboard[game.awayTeamId - 1].goalsOwn;
     });
 
     return updatedLeaderboard;
@@ -134,10 +134,10 @@ export default class LeaderboardUtils {
         updatedLeaderboard[game.homeTeamId - 1]
           .totalPoints / ((updatedLeaderboard[game.homeTeamId - 1].totalGames) * 3)) * 100)
         .toFixed(2));
-      updatedLeaderboard[game.awayTeamId - 1].efficiency = Number(((
-        updatedLeaderboard[game.awayTeamId - 1]
-          .totalPoints / ((updatedLeaderboard[game.awayTeamId - 1]
-          .totalGames) * 3)) * 100).toFixed(2));
+      // updatedLeaderboard[game.awayTeamId - 1].efficiency = Number(((
+      //   updatedLeaderboard[game.awayTeamId - 1]
+      //     .totalPoints / ((updatedLeaderboard[game.awayTeamId - 1]
+      //     .totalGames) * 3)) * 100).toFixed(2));
     });
 
     return updatedLeaderboard;
