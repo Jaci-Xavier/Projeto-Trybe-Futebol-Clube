@@ -16,7 +16,13 @@ class LeaderboardService {
 
     const updateDraws = await LeaderboardUtils.updateDraw(uptadeVictoriesAndLosses, allMatches);
 
-    const ordered = LeaderboardUtils.orderLeaderboard(updateDraws).map((obj) => {
+    const updateGoalsBalance = await LeaderboardUtils
+      .updateGoalsBalance(updateDraws, allMatches);
+
+    const updateEfficiency = await LeaderboardUtils
+      .updateEfficiency(updateGoalsBalance, allMatches);
+
+    const ordered = LeaderboardUtils.orderLeaderboard(updateEfficiency).map((obj) => {
       const { id, ...rest } = obj;
       return rest;
     });

@@ -16,6 +16,8 @@ export default class LeaderboardUtils {
       totalLosses: 0,
       goalsFavor: 0,
       goalsOwn: 0,
+      goalsBalance: 0,
+      efficiency: 0,
     }));
 
     return leaderboard;
@@ -79,14 +81,67 @@ export default class LeaderboardUtils {
     return updatedLeaderboard;
   }
 
+  static orderSequence(a: ILeaderboard, b: ILeaderboard): number {
+    if (a.totalVictories < b.totalVictories) return 1;
+    if (a.totalVictories > b.totalVictories) return -1;
+    if (a.goalsBalance > b.goalsBalance) return -1;
+    if (a.goalsBalance < b.goalsBalance) return 1;
+    if (a.goalsFavor > b.goalsFavor) return -1;
+    if (a.goalsFavor < b.goalsFavor) return 1;
+    return 0;
+  }
+
   static orderLeaderboard(leaderboard: ILeaderboard[]): ILeaderboard[] {
     const orderLeaderboard = leaderboard.sort((a, b) => {
-      if (a.totalPoints !== b.totalPoints) {
-        return b.totalPoints - a.totalPoints;
+      if (a.totalPoints > b.totalPoints) {
+        return -1;
       }
-      return b.totalVictories - a.totalVictories || 0;
+      if (a.totalPoints < b.totalPoints) {
+        return 1;
+      }
+      return LeaderboardUtils.orderSequence(a, b);
     });
 
     return orderLeaderboard;
   }
+
+  static async updateGoalsBalance(
+    leaderboard: ILeaderboard[],
+    match: IMatches[],
+  ): Promise<ILeaderboard[]> {
+    const updatedLeaderboard = leaderboard.map((team) => ({ ...team }));
+
+    match.forEach((game) => {
+      updatedLeaderboard[game.homeTeamId - 1]
+        .goalsBalance = updatedLeaderboard[game.homeTeamId - 1].goalsFavor
+        - updatedLeaderboard[game.homeTeamId - 1].goalsOwn;
+      updatedLeaderboard[game.awayTeamId - 1]
+        .goalsBalance = updatedLeaderboard[game.awayTeamId - 1].goalsFavor
+        - updatedLeaderboard[game.awayTeamId - 1].goalsOwn;
+    });
+
+    return updatedLeaderboard;
+  }
+
+  static async updateEfficiency(
+    leaderboard: ILeaderboard[],
+    match: IMatches[],
+  ): Promise<ILeaderboard[]> {
+    const updatedLeaderboard = leaderboard.map((team) => ({ ...team }));
+
+    match.forEach((game) => {
+      updatedLeaderboard[game.homeTeamId - 1].efficiency = Number(((
+        updatedLeaderboard[game.homeTeamId - 1]
+          .totalPoints / ((updatedLeaderboard[game.homeTeamId - 1].totalGames) * 3)) * 100)
+        .toFixed(2));
+      updatedLeaderboard[game.awayTeamId - 1].efficiency = Number(((
+        updatedLeaderboard[game.awayTeamId - 1]
+          .totalPoints / ((updatedLeaderboard[game.awayTeamId - 1]
+          .totalGames) * 3)) * 100).toFixed(2));
+    });
+
+    return updatedLeaderboard;
+  }
 }
+
+// [P / (J * 3)] * 100
