@@ -67,4 +67,48 @@ describe('Testando a rota matches', () => {
     expect(response.status).to.be.equal(200);
   });
 
+  it('testando se é possivel finalizar uma partida', async () => {
+    sinon.stub(jwt, 'verify').returns({ email: 'admin@admin.com'} as any);
+    sinon.stub(Match, 'update').resolves({} as any);
+
+    const response = await chai.request(app).patch('/matches/44/finish').set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5MzMzMTg2OX0.URUBT44FANWqg7jOLh0-jfs0T5SJMI8snhYaDSSopLo')
+    .send({
+      homeTeamId: 7,
+      awayTeamId: 15,
+      homeTeamGoals: 2,
+      awayTeamGoals: 2,
+      inProgress: false,
+    });
+    expect(response.status).to.be.equal(200);
+  });
+
+  it('testando se é possivel criar uma partida com dois times iguais', async () => {
+    sinon.stub(jwt, 'verify').returns({ email: 'admin@admin.com'} as any);
+    sinon.stub(Match, 'create').resolves({} as any);
+
+    const response = await chai.request(app).post('/matches').set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5MzMzMTg2OX0.URUBT44FANWqg7jOLh0-jfs0T5SJMI8snhYaDSSopLo')
+    .send({
+      homeTeamId: 3,
+      awayTeamId: 3,
+      homeTeamGoals: 0,
+      awayTeamGoals: 0,
+      inProgress: true,
+    });
+    expect(response.status).to.be.equal(422);
+  });
+
+  it('testando se é possivel criar uma partida sem times', async () => {
+    sinon.stub(jwt, 'verify').returns({ email: 'admin@admin.com'} as any);
+    sinon.stub(Match, 'create').resolves({} as any);
+
+    const response = await chai.request(app).post('/matches').set('authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5MzMzMTg2OX0.URUBT44FANWqg7jOLh0-jfs0T5SJMI8snhYaDSSopLo')
+    .send({
+      awayTeamId: 3,
+      homeTeamGoals: 0,
+      awayTeamGoals: 0,
+      inProgress: true,
+    });
+    expect(response.status).to.be.equal(404);
+  });
+
 });

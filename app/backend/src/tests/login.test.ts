@@ -10,6 +10,7 @@ import mockUser from './mocks/mockUser';
 import createToken from '../utils/createToken';
 import User from '../Interfaces/Users/User';
 import tokenVerify from '../middlewares/tokenVerify';
+import LoginVerify from '../middlewares/loginVerify';
 import autJwt from '../utils/auth.jwt';
 
 import { Response } from 'superagent';
@@ -57,6 +58,43 @@ describe('Testando a rota login', () => {
     });
 
     expect(response.status).to.be.equal(401);
+  });
+  
+  it('testando se é possivel logar com senha menor que 6 caracteres', async () => {
+    sinon.stub(UserModel, 'findOne').resolves(mockUser as any);
+    sinon.stub(LoginVerify, 'verifyPassword').returns({} as any);
+
+    const response = await chai.request(app).post('/login').send({
+      email: 'admin@admin.com',
+      password: 'secr',
+    });
+
+    expect(response.status).to.be.equal(401);
+  });
+
+  it('testando se é possivel logar sem senha', async () => {
+    sinon.stub(UserModel, 'findOne').resolves(mockUser as any);
+    sinon.stub(LoginVerify, 'verifyPassword').returns({} as any);
+
+    const response = await chai.request(app).post('/login').send({
+      email: 'admin@admin.com',
+      password: '',
+    });
+
+    expect(response.status).to.be.equal(400);
+  });
+
+
+  it('testando se é possivel logar sem email', async () => {
+    sinon.stub(UserModel, 'findOne').resolves(mockUser as any);
+    sinon.stub(LoginVerify, 'verifyPassword').returns({} as any);
+
+    const response = await chai.request(app).post('/login').send({
+      email: '',
+      password: 'secret_admin',
+    });
+
+    expect(response.status).to.be.equal(400);
   });
 
 });

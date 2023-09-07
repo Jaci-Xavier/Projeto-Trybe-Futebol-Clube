@@ -18,9 +18,21 @@ describe('Testando a rota leaderboard', () => {
     sinon.restore();
   });
 
-  it('testando se é possivel listar o leaderboard', async () => {
+  it('testando se é possivel listar o leaderboard/home', async () => {
     sinon.stub(Match, 'findAll').resolves([]);
     const response = await chai.request(app).get('/leaderboard/home');
+    expect(response.status).to.be.equal(200);
+  });
+
+  it('testando se é possivel listar o leaderboard/away', async () => {
+    sinon.stub(Match, 'findAll').resolves([]);
+    const response = await chai.request(app).get('/leaderboard/away');
+    expect(response.status).to.be.equal(200);
+  });
+
+  it('testando se é possivel listar o leaderboard', async () => {
+    sinon.stub(Match, 'findAll').resolves([]);
+    const response = await chai.request(app).get('/leaderboard');
     expect(response.status).to.be.equal(200);
   });
 
