@@ -2,7 +2,7 @@ import Team from '../database/models/TeamModel';
 import ILeaderboard from '../Interfaces/Leaderboard/Leaderboard';
 import IMatches from '../Interfaces/Matches/Matches';
 
-export default class LeaderboardUtils {
+export default class HomeLeaderboardUtils {
   static async createLeaderboard(): Promise<ILeaderboard[]> {
     const allTeams = await Team.findAll();
 
@@ -99,7 +99,7 @@ export default class LeaderboardUtils {
       if (a.totalPoints < b.totalPoints) {
         return 1;
       }
-      return LeaderboardUtils.orderSequence(a, b);
+      return HomeLeaderboardUtils.orderSequence(a, b);
     });
 
     return orderLeaderboard;
